@@ -5,7 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.DK.admin.common.Common;
 import com.DK.admin.vo.AdminAdVO;
@@ -52,4 +55,99 @@ public class AdminAdDAO {
 	      }
 	      return list;
 	   }
+	 
+	  public void adminAdDelete(String target) {
+		  	// 버튼에 들어온 ad_num값을 ',' 단위로 나눠서 배열을 생성함 
+		  	String[] Array = target.split(",");
+			// 배열을 하나씩 꺼내오면서 해당 배열의 값을 쿼리문에 넣어줌
+			for(String tar : Array) {
+			try {
+				
+				String sql = "DELETE FROM ADMIN_AD WHERE AD_NUM = ?";
+				conn = Common.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, tar);
+				pstmt.executeUpdate();
+				
+				Common.close(pstmt);
+				Common.close(conn);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+	  }
+	  
+	  public boolean adminAdUpdate(String ad_num, String ad_name, String ad_url) {
+		  String sql = "UPDATE ADMIN_AD SET AD_NAME = ?, AD_URL = ? WHERE AD_NUM = ?";
+//		  int ad_num_int = 0;
+//		  if(ad_num.matches("[+-]?\\d*(\\.\\d+)?")) 
+		  int ad_num_int = Integer.parseInt(ad_num);
+		  System.out.println(ad_num_int);
+		  try {
+			  conn = Common.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				
+				pstmt.setString(1, ad_name);
+				pstmt.setString(2, ad_url);
+				pstmt.setInt(3, ad_num_int); 
+				pstmt.executeUpdate();
+				
+				Common.close(pstmt);
+				Common.close(conn);
+		  }catch(Exception e) {
+			  e.printStackTrace();
+		  }
+		  return false; // 데이터 베이스 오류
+	  }
+	  
+	  public List<AdminAdVO> AdUpdateInfo(String ad_num) {
+	      List<AdminAdVO> list = new ArrayList<>();
+	      
+	      try {
+		      String sql = "SELECT AD_NAME, AD_URL FROM ADMIN_AD WHERE = ?";
+	    	  conn = Common.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, ad_num);
+				pstmt.executeUpdate();
+	         
+	         while(rs.next( )) {
+	            String ad_name = rs.getString("AD_NAME");
+	            String ad_url = rs.getString("AD_URL");
+//	            String ad_img = rs.getString("AD_IMG");
+	            
+	            AdminAdVO vo = new AdminAdVO();
+	            vo.setAd_name(ad_name);
+	            vo.setAd_url(ad_url);
+//	            vo.setAd_img(ad_img);
+	            
+	            list.add(vo);
+	         }
+	         Common.close(rs);
+	         Common.close(stmt);
+	         Common.close(conn);
+	      } catch(Exception e) {
+	         e.printStackTrace(); // 호출에 대한 메세지 호출. 디버깅 용도.
+	      }
+	      return list;
+	   }
+	  public boolean adminAdAdd(String ad_name, String ad_url) {
+		  String sql = "INSERT INTO ADMIN_AD(AD_NUM, AD_NAME, AD_URL) VALUES (AD_NUM.NEXTVAL, ?, ?)";
+//		  int ad_num_int = 0;
+//		  if(ad_num.matches("[+-]?\\d*(\\.\\d+)?")) 
+		  try {
+			  conn = Common.getConnection();
+				pstmt = conn.prepareStatement(sql);
+				pstmt.setString(1, ad_name);
+				pstmt.setString(2, ad_url);
+				pstmt.executeUpdate();
+				
+				Common.close(pstmt);
+				Common.close(conn);
+		  }catch(Exception e) {
+			  e.printStackTrace();
+		  }
+		  return false; // 데이터 베이스 오류
+	  }
+
+			
 }
