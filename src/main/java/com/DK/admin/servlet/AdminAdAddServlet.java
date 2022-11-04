@@ -61,7 +61,7 @@ public class AdminAdAddServlet extends HttpServlet {
 				out.print(resJson);
 				
 				
-				// 삭제 후 select list를 불러줌 
+				// 삭제 후 select list를 s불러줌 
 				List<AdminAdVO> list = dao.AdSelect();
 				JSONArray adArray = new JSONArray();
 				

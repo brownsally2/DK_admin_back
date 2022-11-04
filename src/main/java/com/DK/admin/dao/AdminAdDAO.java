@@ -102,12 +102,16 @@ public class AdminAdDAO {
 	  
 	  public List<AdminAdVO> AdUpdateInfo(String ad_num) {
 	      List<AdminAdVO> list = new ArrayList<>();
+	      String sql = "SELECT AD_NAME, AD_URL FROM ADMIN_AD WHERE AD_NUM = ?";
 	      
+	      int ad_num_int = Integer.parseInt(ad_num);
+		  System.out.println(ad_num_int);
 	      try {
-		      String sql = "SELECT AD_NAME, AD_URL FROM ADMIN_AD WHERE = ?";
-	    	  conn = Common.getConnection();
+	    	  	rs = stmt.executeQuery(sql);
+	    	  
+	    	  	conn = Common.getConnection();
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setString(1, ad_num);
+				pstmt.setInt(1, ad_num_int);
 				pstmt.executeUpdate();
 	         
 	         while(rs.next( )) {
@@ -122,9 +126,10 @@ public class AdminAdDAO {
 	            
 	            list.add(vo);
 	         }
-	         Common.close(rs);
-	         Common.close(stmt);
-	         Common.close(conn);
+	         	Common.close(rs);
+				Common.close(pstmt);
+				Common.close(conn); 
+				
 	      } catch(Exception e) {
 	         e.printStackTrace(); // 호출에 대한 메세지 호출. 디버깅 용도.
 	      }
