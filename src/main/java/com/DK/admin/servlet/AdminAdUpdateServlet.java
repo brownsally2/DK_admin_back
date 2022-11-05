@@ -53,12 +53,7 @@ public class AdminAdUpdateServlet extends HttpServlet {
 			  
 			// request에 대한 response를 출력
 				PrintWriter out = response.getWriter();
-				JSONObject resJson = new JSONObject();
-//				if(rstComplete) resJson.put("result", "OK");
-//				else resJson.put("result", "NOK");
-				out.print(resJson);
 	 
-	   
 		// 삭제 후 select list를 불러줌 
 				List<AdminAdVO> list = dao.AdSelect();
 				JSONArray adArray = new JSONArray();

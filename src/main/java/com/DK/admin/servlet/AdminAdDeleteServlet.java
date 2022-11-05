@@ -19,8 +19,8 @@ import com.DK.admin.vo.AdminAdVO;
 
 
 
-@WebServlet("/AdminAdDeleteServelt")
-public class AdminAdDeleteServelt extends HttpServlet {
+@WebServlet("/AdminAdDeleteServlet")
+public class AdminAdDeleteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	 protected void doGet(HttpServletRequest request, HttpServletResponse response) 

@@ -42,34 +42,23 @@ public class AdminAdUpdateInfoServlet extends HttpServlet {
 	      StringBuffer sb = Common.reqStringBuff(request);
 	      JSONObject jsonObj = Common.getJsonObj(sb);
 	      
+	      String reqCmd = (String)jsonObj.get("cmd");
 	      String getAd_num = (String)jsonObj.get("ad_num");
 	      
-	      AdminAdDAO dao = new AdminAdDAO();
-//	      dao.AdUpdateInfo(getAd_num);
-	      System.out.println("전달 받은 번호 : " + getAd_num );
-	      
 	      PrintWriter out = response.getWriter();
-			JSONObject resJson = new JSONObject();
-//			if(rstComplete) resJson.put("result", "OK");
-//			else resJson.put("result", "NOK");
-			out.print(resJson);
-	      
-//
-	      
-	      
+
+	      AdminAdDAO dao = new AdminAdDAO();
+	      System.out.println("전달 받은 번호 : " + getAd_num );
+	      	      
 	      List<AdminAdVO> list = dao.AdUpdateInfo(getAd_num);
 	      
-	      JSONArray adArray = new JSONArray();
+
+	      JSONObject adminAdUpdateInfo = new JSONObject();
 	      for(AdminAdVO e : list) {
-	         JSONObject adminAdUpdateInfo = new JSONObject();
-	         // 리액트에서의 MemberInfo.js에서 "id"로해서 소문자 id로 해야 함
-//	         adInfo.put("ad_num", e.getAd_num());
+
 	         adminAdUpdateInfo.put("ad_name", e.getAd_name());
 	         adminAdUpdateInfo.put("ad_url", e.getAd_url());
-//	         adInfo.put("ad_img", e.getAd_img());
-	         adArray.add(adminAdUpdateInfo);
 	      }
-	      System.out.println(adArray);
-	      out.print(adArray);
+	      out.print(adminAdUpdateInfo);
 	   }
 }

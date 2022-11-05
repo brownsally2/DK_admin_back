@@ -82,7 +82,7 @@ public class AdminAdDAO {
 //		  int ad_num_int = 0;
 //		  if(ad_num.matches("[+-]?\\d*(\\.\\d+)?")) 
 		  int ad_num_int = Integer.parseInt(ad_num);
-		  System.out.println(ad_num_int);
+		  System.out.println("보낸 UPDATE ad_num 값: " + ad_num_int);
 		  try {
 			  conn = Common.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -104,17 +104,16 @@ public class AdminAdDAO {
 	      List<AdminAdVO> list = new ArrayList<>();
 	      String sql = "SELECT AD_NAME, AD_URL FROM ADMIN_AD WHERE AD_NUM = ?";
 	      
-	      int ad_num_int = Integer.parseInt(ad_num);
-		  System.out.println(ad_num_int);
+//	      int ad_num_int = Integer.parseInt(ad_num);
+		  System.out.println("보낸 UPDATE INFO ad_num 값: " +ad_num);
 	      try {
-	    	  	rs = stmt.executeQuery(sql);
-	    	  
+	    	  	
 	    	  	conn = Common.getConnection();
 				pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, ad_num_int);
-				pstmt.executeUpdate();
-	         
-	         while(rs.next( )) {
+				pstmt.setString(1, ad_num);
+//				pstmt.executeUpdate();
+				rs = pstmt.executeQuery();
+	         while(rs.next()) {
 	            String ad_name = rs.getString("AD_NAME");
 	            String ad_url = rs.getString("AD_URL");
 //	            String ad_img = rs.getString("AD_IMG");
