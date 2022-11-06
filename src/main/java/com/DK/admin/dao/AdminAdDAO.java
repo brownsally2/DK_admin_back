@@ -29,7 +29,7 @@ public class AdminAdDAO {
 	         conn = Common.getConnection();
 	         stmt = conn.createStatement();
 	         String sql = null;
-	         sql = "SELECT * FROM ADMIN_AD";
+	         sql = "SELECT * FROM ADMIN_AD ORDER BY AD_NUM ASC";
 //	         else sql = "SELECT * FROM  T_MEMBER WHERE ID = " + "'" + reqId + "'";
 	         rs = stmt.executeQuery(sql);
 	         
@@ -152,6 +152,37 @@ public class AdminAdDAO {
 		  }
 		  return false; // 데이터 베이스 오류
 	  }
-
+//	  public List<AdminAdVO> AdNotiSend() {
+//	      List<AdminAdVO> list = new ArrayList<>();
+//	      try {
+//	         conn = Common.getConnection();
+//	         stmt = conn.createStatement();
+//	         String sql = null;
+//	         sql = "SELECT * FROM ADMIN_AD ORDER BY AD_NUM ASC";
+////	         else sql = "SELECT * FROM  T_MEMBER WHERE ID = " + "'" + reqId + "'";
+//	         rs = stmt.executeQuery(sql);
+//	         
+//	         while(rs.next( )) {
+//	            int ad_num = rs.getInt("AD_NUM");
+//	            String ad_name = rs.getString("AD_NAME");
+//	            String ad_url = rs.getString("AD_URL");
+//	            String ad_img = rs.getString("AD_IMG");
+//	            
+//	            AdminAdVO vo = new AdminAdVO();
+//	            vo.setAd_num(ad_num);
+//	            vo.setAd_name(ad_name);
+//	            vo.setAd_url(ad_url);
+//	            vo.setAd_img(ad_img);
+//	            
+//	            list.add(vo);
+//	         }
+//	         Common.close(rs);
+//	         Common.close(stmt);
+//	         Common.close(conn);
+//	      } catch(Exception e) {
+//	         e.printStackTrace(); // 호출에 대한 메세지 호출. 디버깅 용도.
+//	      }
+//	      return list;
+//	   }
 			
 }
