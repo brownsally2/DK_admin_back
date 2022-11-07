@@ -30,7 +30,6 @@ public class AdminAdDAO {
 	         stmt = conn.createStatement();
 	         String sql = null;
 	         sql = "SELECT * FROM ADMIN_AD ORDER BY AD_NUM ASC";
-//	         else sql = "SELECT * FROM  T_MEMBER WHERE ID = " + "'" + reqId + "'";
 	         rs = stmt.executeQuery(sql);
 	         
 	         while(rs.next( )) {
@@ -79,8 +78,6 @@ public class AdminAdDAO {
 	  
 	  public boolean adminAdUpdate(String ad_num, String ad_name, String ad_url) {
 		  String sql = "UPDATE ADMIN_AD SET AD_NAME = ?, AD_URL = ? WHERE AD_NUM = ?";
-//		  int ad_num_int = 0;
-//		  if(ad_num.matches("[+-]?\\d*(\\.\\d+)?")) 
 		  int ad_num_int = Integer.parseInt(ad_num);
 		  System.out.println("보낸 UPDATE ad_num 값: " + ad_num_int);
 		  try {
@@ -136,8 +133,6 @@ public class AdminAdDAO {
 	   }
 	  public boolean adminAdAdd(String ad_name, String ad_url) {
 		  String sql = "INSERT INTO ADMIN_AD(AD_NUM, AD_NAME, AD_URL) VALUES (AD_NUM.NEXTVAL, ?, ?)";
-//		  int ad_num_int = 0;
-//		  if(ad_num.matches("[+-]?\\d*(\\.\\d+)?")) 
 		  try {
 			  conn = Common.getConnection();
 				pstmt = conn.prepareStatement(sql);
@@ -152,37 +147,59 @@ public class AdminAdDAO {
 		  }
 		  return false; // 데이터 베이스 오류
 	  }
-//	  public List<AdminAdVO> AdNotiSend() {
-//	      List<AdminAdVO> list = new ArrayList<>();
-//	      try {
-//	         conn = Common.getConnection();
-//	         stmt = conn.createStatement();
-//	         String sql = null;
-//	         sql = "SELECT * FROM ADMIN_AD ORDER BY AD_NUM ASC";
-////	         else sql = "SELECT * FROM  T_MEMBER WHERE ID = " + "'" + reqId + "'";
-//	         rs = stmt.executeQuery(sql);
-//	         
-//	         while(rs.next( )) {
-//	            int ad_num = rs.getInt("AD_NUM");
-//	            String ad_name = rs.getString("AD_NAME");
-//	            String ad_url = rs.getString("AD_URL");
-//	            String ad_img = rs.getString("AD_IMG");
-//	            
-//	            AdminAdVO vo = new AdminAdVO();
-//	            vo.setAd_num(ad_num);
-//	            vo.setAd_name(ad_name);
-//	            vo.setAd_url(ad_url);
-//	            vo.setAd_img(ad_img);
-//	            
-//	            list.add(vo);
-//	         }
-//	         Common.close(rs);
-//	         Common.close(stmt);
-//	         Common.close(conn);
-//	      } catch(Exception e) {
-//	         e.printStackTrace(); // 호출에 대한 메세지 호출. 디버깅 용도.
-//	      }
-//	      return list;
-//	   }
+	  public List<AdminAdVO> AdNotiSend1(String inputStatus) {
+	      List<AdminAdVO> list1 = new ArrayList<>();
+	      try {
+	         conn = Common.getConnection();
+	         stmt = conn.createStatement();
+	         String sql = null;
+	         sql = "SELECT NICKNAME, EMAIL FROM MEMBER";
+	         rs = stmt.executeQuery(sql);
+	         
+	         while(rs.next( )) {
+	            String nickName = rs.getString("NICKNAME");
+	            String email = rs.getString("EMAIL");
+	            
+	            AdminAdVO vo = new AdminAdVO();
+	            vo.setNickName(nickName);
+	            vo.setEmail(email);
+	            
+	            list1.add(vo);
+	         }
+	         Common.close(rs);
+	         Common.close(stmt);
+	         Common.close(conn);
+	      } catch(Exception e) {
+	         e.printStackTrace(); // 호출에 대한 메세지 호출. 디버깅 용도.
+	      }
+	      return list1;
+	   }
+	  public List<AdminAdVO> AdNotiSend2(String inputStatus2) {
+	      List<AdminAdVO> list = new ArrayList<>();
+	      try {
+	         conn = Common.getConnection();
+	         stmt = conn.createStatement();
+	         String sql = null;
+	         sql = "SELECT NICKNAME, EMAIL FROM MEMBER WHERE IS_ADOK = 'Y'";
+	         rs = stmt.executeQuery(sql);
+	         
+	         while(rs.next( )) {
+		            String nickName = rs.getString("NICKNAME");
+		            String email = rs.getString("EMAIL");
+		            
+		            AdminAdVO vo = new AdminAdVO();
+		            vo.setNickName(nickName);
+		            vo.setEmail(email);
+		            
+		            list.add(vo);
+		         }
+	         Common.close(rs);
+	         Common.close(stmt);
+	         Common.close(conn);
+	      } catch(Exception e) {
+	         e.printStackTrace(); // 호출에 대한 메세지 호출. 디버깅 용도.
+	      }
+	      return list;
+	   }
 			
 }

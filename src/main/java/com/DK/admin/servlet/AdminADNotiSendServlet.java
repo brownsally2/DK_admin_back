@@ -44,30 +44,36 @@ public class AdminADNotiSendServlet extends HttpServlet {
 			String regCmd2 = (String)jsonObj.get("inputStatus2");
 			// AdminAdDAO에 변환한 regCmd를 넣어줌
 			AdminAdDAO dao = new AdminAdDAO();
-			if(regCmd.equals("true")&&regCmd2.equals("false")) {
-				dao.adminAdDelete(regCmd);
-			} else {
-				dao.adminAdDelete(regCmd2);
+			if(regCmd.equals("true") && regCmd2.equals("false")) {
+				dao.AdNotiSend1(regCmd);
+			}else {
+				dao.AdNotiSend2(regCmd2);
 			}
-			 
-			
 			
 			PrintWriter out = response.getWriter();
+			if(regCmd.equals("true")&&regCmd2.equals("false")) {
+				List<AdminAdVO> list = dao.AdNotiSend1(regCmd);
+				JSONArray adArray = new JSONArray();
+				for(AdminAdVO e1 : list) {
+					JSONObject notiSend1 = new JSONObject();
+						notiSend1.put("nickName", e1.getNickName());
+						notiSend1.put("email", e1.getEmail());
+				        adArray.add(notiSend1);
+			}
+				out.print(adArray);
+				
+			}else {
+				List<AdminAdVO> list = dao.AdNotiSend2(regCmd);
+				JSONArray adArray = new JSONArray();
+			for(AdminAdVO e1 : list) {
+				JSONObject notiSend2 = new JSONObject();
+				notiSend2.put("nickName", e1.getNickName());
+				notiSend2.put("email", e1.getEmail());
+		        adArray.add(notiSend2);
+	}
+		out.print(adArray);
 			
-			// 삭제 후 select list를 불러줌 
-			List<AdminAdVO> list = dao.AdSelect();
-			JSONArray adArray = new JSONArray();
-			
-			// 삭제 후 리스트틀 다시 보내줌 
-			for(AdminAdVO e : list) {
-				JSONObject adInfo = new JSONObject();
-				   	 adInfo.put("ad_num", e.getAd_num());
-			         adInfo.put("ad_name", e.getAd_name());
-			         adInfo.put("ad_url", e.getAd_url());
-			         adInfo.put("ad_img", e.getAd_img());
-			         adArray.add(adInfo);
-		}
-			out.print(adArray);
 	   }
+	 }
 }
 
