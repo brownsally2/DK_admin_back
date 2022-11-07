@@ -147,16 +147,16 @@ public class AdminAdDAO {
 		  }
 		  return false; // 데이터 베이스 오류
 	  }
-	  public List<AdminAdVO> AdNotiSend1(String inputStatus) {
+	  public List<AdminAdVO> AdNotiSend1() {
 	      List<AdminAdVO> list1 = new ArrayList<>();
 	      try {
 	         conn = Common.getConnection();
 	         stmt = conn.createStatement();
 	         String sql = null;
-	         sql = "SELECT NICKNAME, EMAIL FROM MEMBER";
+	         sql = "SELECT NICKNAME, EMAIL FROM MEMBER WHERE MEMBER_NUM != 1";
 	         rs = stmt.executeQuery(sql);
 	         
-	         while(rs.next( )) {
+	         while(rs.next()) {
 	            String nickName = rs.getString("NICKNAME");
 	            String email = rs.getString("EMAIL");
 	            
@@ -174,13 +174,13 @@ public class AdminAdDAO {
 	      }
 	      return list1;
 	   }
-	  public List<AdminAdVO> AdNotiSend2(String inputStatus2) {
+	  public List<AdminAdVO> AdNotiSend2() {
 	      List<AdminAdVO> list = new ArrayList<>();
 	      try {
 	         conn = Common.getConnection();
 	         stmt = conn.createStatement();
 	         String sql = null;
-	         sql = "SELECT NICKNAME, EMAIL FROM MEMBER WHERE IS_ADOK = 'Y'";
+	         sql = "SELECT NICKNAME, EMAIL FROM MEMBER WHERE IS_ADOK = 'Y' AND MEMBER_NUM != 1";
 	         rs = stmt.executeQuery(sql);
 	         
 	         while(rs.next( )) {

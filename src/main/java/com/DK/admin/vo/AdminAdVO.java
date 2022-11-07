@@ -8,7 +8,21 @@ public class AdminAdVO {
 		private String ad_img;
 		private String nickName;
 		private String email;
+		private String titles;
+		private String contents;
 
+		public String getTitles() {
+			return titles;
+		}
+		public void setTitles(String titles) {
+			this.titles = titles;
+		}
+		public String getContents() {
+			return contents;
+		}
+		public void setContents(String contents) {
+			this.contents = contents;
+		}
 		public String getNickName() {
 			return nickName;
 		}
